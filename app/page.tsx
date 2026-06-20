@@ -119,9 +119,12 @@ const houseOfSignatureImage =
                   rounded-[16px]
                   overflow-hidden
                   transition-all
-                  duration-500
-                  hover:-translate-y-2
-                  hover:shadow-xl
+                  duration-300
+                  ease-out
+                  hover:-translate-y-3
+                  hover:scale-[1.03]
+                  hover:shadow-2xl
+                  hover:border-[#B8860B]
                   cursor-pointer
                 "
               >
@@ -189,15 +192,18 @@ const houseOfSignatureImage =
         <div className="luxury-container">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div
-  className="
+ className="
     overflow-hidden
     rounded-[24px]
-    shadow-xl
+    border
+    border-transparent
     transition-all
-    duration-500
-    hover:-translate-y-4
+    duration-300
+    ease-out
+    hover:-translate-y-3
     hover:scale-[1.03]
     hover:shadow-2xl
+    hover:border-[#B8860B]
     cursor-pointer
   "
 >
@@ -350,23 +356,27 @@ const houseOfSignatureImage =
               },
             ].map((item) => (
               <div
-                key={item.title}
-                className="
-                  bg-[#F8F6F2]
+  key={item.title}
+  className="
+    bg-[#F8F6F2]
     p-10
     min-h-[280px]
     rounded-[24px]
     border
     border-[#E7E0D4]
-    transition-all
-    duration-500
-    hover:-translate-y-2
-    hover:shadow-xl
     flex
     flex-col
     justify-center
-                "
-              >
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-3
+    hover:scale-[1.03]
+    hover:shadow-2xl
+    hover:border-[#B8860B]
+    cursor-pointer
+  "
+>
                 <h3
                    className="
                    font-luxury
@@ -380,11 +390,11 @@ const houseOfSignatureImage =
 
                 <p
                  className="
-                 text-gray-600
-                 leading-8
-                 text-lg
-                 text-center
-                 "
+                text-gray-600
+                leading-8
+    text-lg
+    text-center
+  "
 >
                   {item.text}
                 </p>
@@ -410,40 +420,49 @@ const houseOfSignatureImage =
 
           <div className="grid lg:grid-cols-3 gap-8">
             {[
-              {
+               {
                 review:
                   "Absolutely breathtaking craftsmanship and unmatched elegance. The saree became the highlight of our wedding celebration.",
-                name: "Signature Bride",
               },
               {
                 review:
                   "Exceptional quality, luxurious silk and timeless artistry. A piece that will remain in our family for generations.",
-                name: "Happy Client",
               },
               {
                 review:
                   "From the weaving to the finishing details, every aspect reflects true luxury and heritage.",
-                name: "Signature Customer",
               },
             ].map((item, index) => (
               <div
-                key={index}
-                className="
-                  bg-[#F8F6F2]
-                  p-10
-                  rounded-[24px]
-                  border
-                  border-[#E7E0D4]
-                "
-              >
-                <p className="text-gray-600 leading-8 mb-8">
-                  &quot;{item.review}&quot;
-                </p>
-
-                <h4 className="font-medium text-[#111111]">
-                  {item.name}
-                </h4>
-              </div>
+  key={index}
+  className="
+    bg-[#F8F6F2]
+    rounded-[24px]
+    border
+    border-[#E7E0D4]
+    flex
+    flex-col
+    justify-center
+    transition-all
+    duration-300
+    ease-out
+    hover:-translate-y-3
+    hover:scale-[1.03]
+    hover:shadow-2xl
+    hover:border-[#B8860B]
+    cursor-pointer
+  "
+  style={{
+    minHeight: "300px",
+    padding: "48px",
+  }}
+>
+  <p
+    className="text-gray-600 text-lg leading-8 text-left"
+  >
+    &quot;{item.review}&quot;
+  </p>
+</div>
             ))}
           </div>
         </div>
