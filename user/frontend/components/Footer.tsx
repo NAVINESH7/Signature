@@ -151,7 +151,7 @@ export default function Footer() {
               <li>meyusignature@gmail.com</li>
               <li>+91 93606 72054 </li>
               <li>+91 90807 35468 </li>
-              <li>+91 88071 70215</li>
+              
               <li>Rasipuram, Tamil Nadu, India</li>
             </ul>
           </div>
