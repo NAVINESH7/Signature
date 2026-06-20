@@ -4,8 +4,6 @@ import Footer from "@/user/frontend/components/Footer";
 import { getActiveGalleryItems } from "@/user/backend/gallery/getActiveGalleryItems";
 import HeroSlider from "@/user/frontend/components/HeroSlider";
 import { getActiveHeroBanners } from "@/user/backend/hero-banners/getActiveHeroBanners";
-import Link from "next/link";
-
 
 export default async function Home() {
   
@@ -82,9 +80,14 @@ const houseOfSignatureImage =
       <Navbar />
 
       {/* HERO SLIDER */}
-      <section className="pt-20">
-        <HeroSlider banners={banners} />
-      </section>
+<section
+  style={{
+    marginTop: "60px",
+    paddingTop: "20px",
+  }}
+>
+  <HeroSlider banners={banners} />
+</section>
 
       {/* COLLECTIONS */}
       <section className="luxury-section">
@@ -107,27 +110,21 @@ const houseOfSignatureImage =
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {collections.map((collection) => (
-
-<Link
-  key={collection}
-  href={`/collections?category=${collection
-    .toLowerCase()
-    .replace(/\s+/g, "-")}`}
->
-  <div
-    className="
-      bg-white
-      border
-      border-[#E7E0D4]
-      rounded-[16px]
-      overflow-hidden
-      transition-all
-      duration-500
-      hover:-translate-y-2
-      hover:shadow-xl
-      cursor-pointer
-    "
-  >
+              <div
+                key={collection}
+                className="
+                  bg-white
+                  border
+                  border-[#E7E0D4]
+                  rounded-[16px]
+                  overflow-hidden
+                  transition-all
+                  duration-500
+                  hover:-translate-y-2
+                  hover:shadow-xl
+                  cursor-pointer
+                "
+              >
 
 {collectionImages[
   collection as keyof typeof collectionImages
@@ -159,7 +156,6 @@ const houseOfSignatureImage =
   >
     No Image
   </div>
-  
 )}
 
                 <div
@@ -183,7 +179,6 @@ const houseOfSignatureImage =
                   </h3>
                 </div>
               </div>
-              </Link>
             ))}
           </div>
         </div>
@@ -193,7 +188,19 @@ const houseOfSignatureImage =
       <section className="luxury-section">
         <div className="luxury-container">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
-            <div className="overflow-hidden rounded-[24px] shadow-xl">
+            <div
+  className="
+    overflow-hidden
+    rounded-[24px]
+    shadow-xl
+    transition-all
+    duration-500
+    hover:-translate-y-4
+    hover:scale-[1.03]
+    hover:shadow-2xl
+    cursor-pointer
+  "
+>
               
 {houseOfSignatureImage ? (
   <img
@@ -346,37 +353,39 @@ const houseOfSignatureImage =
                 key={item.title}
                 className="
                   bg-[#F8F6F2]
-                  p-10
-                  rounded-[24px]
-                  border
-                  border-[#E7E0D4]
-                  transition-all
-                  duration-500
-                  hover:-translate-y-2
-                  hover:shadow-xl
+    p-10
+    min-h-[280px]
+    rounded-[24px]
+    border
+    border-[#E7E0D4]
+    transition-all
+    duration-500
+    hover:-translate-y-2
+    hover:shadow-xl
+    flex
+    flex-col
+    justify-center
                 "
               >
-                <div
-                  className="
-                    w-16
-                    h-16
-                    rounded-full
-                    bg-[#B8860B]/10
-                    mb-6
-                  "
-                />
-
                 <h3
-                  className="
-                    font-luxury
-                    text-2xl
-                    mb-4
-                  "
-                >
+                   className="
+                   font-luxury
+                   text-3xl
+                    mb-6
+                   text-center
+                    "
+>
                   {item.title}
                 </h3>
 
-                <p className="text-gray-600 leading-7">
+                <p
+                 className="
+                 text-gray-600
+                 leading-8
+                 text-lg
+                 text-center
+                 "
+>
                   {item.text}
                 </p>
               </div>
