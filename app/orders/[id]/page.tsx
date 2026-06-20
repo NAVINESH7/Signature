@@ -1,6 +1,8 @@
-import { redirect } from "next/navigation";
+/* =========================================================
+   BLOCK A
+   IMPORTS
+========================================================= */
 
-import { supabaseClient } from "@/lib/supabase-client";
 import Link from "next/link";
 
 import Navbar from "@/user/frontend/components/Navbar";
@@ -8,33 +10,37 @@ import Navbar from "@/user/frontend/components/Navbar";
 import { getOrderById } from "@/user/backend/orders/getOrderById";
 import { getOrderItems } from "@/user/backend/orders/getOrderItems";
 
+/* =========================================================
+   BLOCK B
+   INTERFACE
+========================================================= */
+
 interface Props {
   params: Promise<{
     id: string;
   }>;
 }
 
+/* =========================================================
+   BLOCK C
+   COMPONENT START
+========================================================= */
+
 export default async function OrderPage({
   params,
 }: Props) {
   const { id } = await params;
 
-const {
-  data: { user },
-} = await supabaseClient.auth.getUser();
-
-if (!user) {
-  redirect("/login");
-}
-
-const order =
-  await getOrderById(
-    id,
-    user.id
-  );
+  const order =
+    await getOrderById(id);
 
   const items =
     await getOrderItems(id);
+
+/* =========================================================
+   BLOCK D
+   ORDER NOT FOUND
+========================================================= */
 
   if (!order) {
     return (
@@ -50,12 +56,23 @@ const order =
     );
   }
 
+/* =========================================================
+   BLOCK E
+   RETURN START
+========================================================= */
+
   return (
     <main className="min-h-screen bg-[#F8F6F2]">
       <Navbar />
 
       <section className="py-12">
         <div className="luxury-container">
+
+{/* =========================================================
+   BLOCK F
+   BACK BUTTON
+========================================================= */}
+
           <Link
             href="/orders"
             className="
@@ -66,19 +83,46 @@ const order =
             ← Back To Orders
           </Link>
 
-          <h1
+{/* =========================================================
+   BLOCK G
+   PAGE TITLE
+========================================================= */}
+
+          <div className="mb-10">
+            <h1
+              className="
+                font-luxury
+                text-6xl
+                mt-6
+              "
+            >
+              Order Details
+            </h1>
+
+            <p className="mt-3 text-gray-500">
+              Order #
+              {order.id.slice(0, 8)}
+            </p>
+          </div>
+
+{/* =========================================================
+   BLOCK H
+   TWO COLUMN LAYOUT
+========================================================= */}
+
+          <div
             className="
-              font-luxury
-              text-6xl
-              mt-6
-              mb-10
+              grid
+              lg:grid-cols-[2fr_1fr]
+              gap-10
+              items-start
             "
           >
-            Order Details
-          </h1>
 
-          <div className="grid lg:grid-cols-[2fr_1fr] gap-10">
-            {/* Products */}
+{/* =========================================================
+   BLOCK I
+   PRODUCTS CARD START
+========================================================= */}
 
             <div
               className="
@@ -99,6 +143,11 @@ const order =
                 Ordered Products
               </h2>
 
+{/* =========================================================
+   BLOCK J
+   PRODUCTS LOOP
+========================================================= */}
+
               <div className="space-y-6">
                 {items.map(
                   (item: any) => (
@@ -106,46 +155,92 @@ const order =
                       key={item.id}
                       className="
                         flex
-                        gap-5
-                        border-b
+                        items-center
+                        justify-between
+                        gap-6
+                        p-5
+                        rounded-2xl
+                        border
                         border-[#E7E0D4]
-                        pb-5
                       "
                     >
-                      <img
-                        src={
-                          item.product_image
-                        }
-                        alt={
-                          item.product_name
-                        }
-                        className="
-                          w-24
-                          h-32
-                          object-cover
-                          rounded-xl
-                        "
-                      />
+                      {item.product_image && (
+                        <img
+                          src={
+                            item.product_image
+                          }
+                          alt={
+                            item.product_name
+                          }
+                          className="
+                            w-28
+                            h-36
+                            object-cover
+                            rounded-xl
+                          "
+                        />
+                      )}
 
-                      <div>
-                        <h3 className="font-medium">
+                      <div className="flex-1">
+                        <h3
+                          className="
+                            text-xl
+                            font-semibold
+                          "
+                        >
                           {
                             item.product_name
                           }
                         </h3>
 
-                        <p className="mt-2 text-gray-500">
-                          Qty:
+                        <p
+                          className="
+                            mt-2
+                            text-gray-500
+                          "
+                        >
+                          Quantity:
                           {" "}
                           {
                             item.quantity
                           }
                         </p>
 
-                        <p className="mt-2 text-[#B8860B]">
+                        <p
+                          className="
+                            mt-3
+                            text-[#B8860B]
+                            font-semibold
+                            text-xl
+                          "
+                        >
                           ₹
                           {Number(
                             item.price
+                          ).toLocaleString()}
+                        </p>
+                      </div>
+
+                      <div className="text-right">
+                        <p
+                          className="
+                            text-gray-500
+                            text-sm
+                          "
+                        >
+                          Total
+                        </p>
+
+                        <p
+                          className="
+                            text-2xl
+                            font-bold
+                          "
+                        >
+                          ₹
+                          {Number(
+                            item.price *
+                              item.quantity
                           ).toLocaleString()}
                         </p>
                       </div>
@@ -155,7 +250,10 @@ const order =
               </div>
             </div>
 
-            {/* Summary */}
+{/* =========================================================
+   BLOCK K
+   SUMMARY CARD START
+========================================================= */}
 
             <div
               className="
@@ -171,25 +269,62 @@ const order =
                 className="
                   font-luxury
                   text-3xl
-                  mb-6
+                  mb-8
                 "
               >
-                Summary
+                Order Summary
               </h2>
 
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span>Status</span>
+{/* =========================================================
+   BLOCK L
+   STATUS TOTAL DATE
+========================================================= */}
 
-                  <span className="capitalize text-[#B8860B]">
+              <div className="space-y-5">
+
+                <div
+                  className="
+                    flex
+                    justify-between
+                    items-center
+                  "
+                >
+                  <span className="text-gray-500">
+                    Status
+                  </span>
+
+                  <span
+                    className="
+                      px-4
+                      py-2
+                      rounded-full
+                      bg-[#FFF8EC]
+                      text-[#B8860B]
+                      font-semibold
+                      text-sm
+                    "
+                  >
                     {order.status}
                   </span>
                 </div>
 
-                <div className="flex justify-between">
-                  <span>Total</span>
+                <div
+                  className="
+                    flex
+                    justify-between
+                    items-center
+                  "
+                >
+                  <span className="text-gray-500">
+                    Total
+                  </span>
 
-                  <span>
+                  <span
+                    className="
+                      text-2xl
+                      font-bold
+                    "
+                  >
                     ₹
                     {Number(
                       order.total_amount
@@ -197,8 +332,16 @@ const order =
                   </span>
                 </div>
 
-                <div className="flex justify-between">
-                  <span>Date</span>
+                <div
+                  className="
+                    flex
+                    justify-between
+                    items-center
+                  "
+                >
+                  <span className="text-gray-500">
+                    Date
+                  </span>
 
                   <span>
                     {new Date(
@@ -206,7 +349,13 @@ const order =
                     ).toLocaleDateString()}
                   </span>
                 </div>
+
               </div>
+
+{/* =========================================================
+   BLOCK M
+   ORDER PROGRESS
+========================================================= */}
 
               <div
                 className="
@@ -216,36 +365,169 @@ const order =
                   border-[#E7E0D4]
                 "
               >
-                <h3 className="font-medium mb-4">
+                <h3
+                  className="
+                    text-lg
+                    font-semibold
+                    mb-5
+                  "
+                >
+                  Order Progress
+                </h3>
+
+                <div className="space-y-4">
+
+                  <div>
+                    ✓ Confirmed
+                  </div>
+
+                  {[
+                    "processing",
+                    "packed",
+                    "shipped",
+                    "out for delivery",
+                    "delivered",
+                  ].includes(
+                    order.status.toLowerCase()
+                  ) && (
+                    <div>
+                      ✓ Processing
+                    </div>
+                  )}
+
+                  {[
+                    "packed",
+                    "shipped",
+                    "out for delivery",
+                    "delivered",
+                  ].includes(
+                    order.status.toLowerCase()
+                  ) && (
+                    <div>
+                      ✓ Packed
+                    </div>
+                  )}
+
+                  {[
+                    "shipped",
+                    "out for delivery",
+                    "delivered",
+                  ].includes(
+                    order.status.toLowerCase()
+                  ) && (
+                    <div>
+                      ✓ Shipped
+                    </div>
+                  )}
+
+                  {[
+                    "out for delivery",
+                    "delivered",
+                  ].includes(
+                    order.status.toLowerCase()
+                  ) && (
+                    <div>
+                      ✓ Out For Delivery
+                    </div>
+                  )}
+
+                  {order.status
+                    .toLowerCase()
+                    .includes(
+                      "delivered"
+                    ) && (
+                    <div>
+                      ✓ Delivered
+                    </div>
+                  )}
+                </div>
+              </div>
+
+{/* =========================================================
+   BLOCK N
+   SHIPPING ADDRESS
+========================================================= */}
+
+              <div
+                className="
+                  mt-8
+                  pt-8
+                  border-t
+                  border-[#E7E0D4]
+                "
+              >
+                <h3
+                  className="
+                    text-lg
+                    font-semibold
+                    mb-4
+                  "
+                >
                   Shipping Address
                 </h3>
 
-                <p>
-                  {order.customer_name}
-                </p>
+                <div
+                  className="
+                    bg-[#FAF8F4]
+                    rounded-xl
+                    p-5
+                    space-y-2
+                  "
+                >
+                  <p className="font-semibold">
+                    {order.customer_name}
+                  </p>
 
-                <p>
-                  {order.address_line_1}
-                </p>
+                  <p>
+                    {order.address_line_1}
+                  </p>
 
-                <p>
-                  {order.city},
-                  {" "}
-                  {order.state}
-                </p>
+                  {order.address_line_2 && (
+                    <p>
+                      {order.address_line_2}
+                    </p>
+                  )}
 
-                <p>
-                  {order.pincode}
-                </p>
+                  <p>
+                    {order.city},{" "}
+                    {order.state}
+                  </p>
 
-                <p>
-                  {order.country}
-                </p>
+                  <p>
+                    {order.pincode}
+                  </p>
+
+                  <p>
+                    {order.country}
+                  </p>
+                </div>
               </div>
+
+{/* =========================================================
+   BLOCK O
+   CLOSE SUMMARY CARD
+========================================================= */}
+
             </div>
+
+{/* =========================================================
+   BLOCK P
+   CLOSE GRID
+========================================================= */}
+
           </div>
+
+{/* =========================================================
+   BLOCK Q
+   CLOSE PAGE
+========================================================= */}
+
         </div>
       </section>
     </main>
   );
 }
+
+/* =========================================================
+   END OF FILE
+========================================================= */

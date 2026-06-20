@@ -13,6 +13,10 @@ export default function OrdersTable({
   const [filter, setFilter] =
     useState("all");
 
+
+const [search, setSearch] =
+  useState("");
+
   const stats = useMemo(
     () => ({
       all: orders.length,
@@ -25,11 +29,27 @@ export default function OrdersTable({
           o.status ===
           "confirmed"
       ).length,
-      processing: orders.filter(
-        (o) =>
-          o.status ===
-          "processing"
-      ).length,
+
+      
+processing: orders.filter(
+  (o) =>
+    o.status ===
+    "processing"
+).length,
+
+packed: orders.filter(
+  (o) =>
+    o.status ===
+    "packed"
+).length,
+
+outForDelivery:
+  orders.filter(
+    (o) =>
+      o.status ===
+      "out for delivery"
+  ).length,
+
       shipped: orders.filter(
         (o) =>
           o.status === "shipped"
@@ -48,14 +68,30 @@ export default function OrdersTable({
     [orders]
   );
 
-  const filteredOrders =
-    filter === "all"
-      ? orders
-      : orders.filter(
-          (order) =>
-            order.status ===
-            filter
+const filteredOrders =
+  orders.filter((order) => {
+    const matchesStatus =
+      filter === "all" ||
+      order.status === filter;
+
+    const matchesSearch =
+      order.id
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        ) ||
+      order.customer_name
+        ?.toLowerCase()
+        .includes(
+          search.toLowerCase()
         );
+
+        
+    return (
+      matchesStatus &&
+      matchesSearch
+    );
+  });
 
   const filters = [
     {
@@ -88,12 +124,55 @@ export default function OrdersTable({
       label: "Delivered",
       count: stats.delivered,
     },
+
+{
+  key: "packed",
+  label: "Packed",
+  count: stats.packed,
+},
+
+{
+  key: "out for delivery",
+  label: "Out For Delivery",
+  count: stats.outForDelivery,
+},
+
+
     {
       key: "cancelled",
       label: "Cancelled",
       count: stats.cancelled,
     },
   ];
+
+const statusColors: Record<
+  string,
+  string
+> = {
+  pending:
+    "bg-yellow-100 text-yellow-700",
+
+  confirmed:
+    "bg-blue-100 text-blue-700",
+
+  processing:
+    "bg-purple-100 text-purple-700",
+
+  packed:
+    "bg-indigo-100 text-indigo-700",
+
+  shipped:
+    "bg-orange-100 text-orange-700",
+
+  "out for delivery":
+    "bg-cyan-100 text-cyan-700",
+
+  delivered:
+    "bg-green-100 text-green-700",
+
+  cancelled:
+    "bg-red-100 text-red-700",
+};
 
   return (
     <main className="space-y-8">
@@ -129,7 +208,7 @@ export default function OrdersTable({
           grid
           grid-cols-2
           md:grid-cols-4
-          xl:grid-cols-7
+          xl:grid-cols-9
           gap-4
         "
       >
@@ -219,6 +298,31 @@ export default function OrdersTable({
             </tr>
           </thead>
 
+<div
+  className="
+    bg-white
+    border
+    border-[#E7E0D4]
+    rounded-2xl
+    p-4
+  "
+>
+  <input
+    type="text"
+    placeholder="Search by Order ID or Customer"
+    value={search}
+    onChange={(e) =>
+      setSearch(
+        e.target.value
+      )
+    }
+    className="
+      w-full
+      outline-none
+    "
+  />
+</div>
+
           <tbody>
             {filteredOrders.map(
               (order: any) => (
@@ -242,9 +346,26 @@ export default function OrdersTable({
                     }
                   </td>
 
-                  <td className="p-5 capitalize">
-                    {order.status}
-                  </td>
+<td className="p-5">
+  <span
+    className={`
+      px-3
+      py-1
+      rounded-full
+      text-xs
+      font-medium
+      capitalize
+      ${
+        statusColors[
+          order.status
+        ] ||
+        "bg-gray-100 text-gray-700"
+      }
+    `}
+  >
+    {order.status}
+  </span>
+</td>
 
                   <td className="p-5">
                     ₹

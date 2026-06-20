@@ -265,18 +265,30 @@ setOrdersCount(
         >
 
 <div className="flex gap-4 items-center">
-<img
-  src={order.product_image}
+
+{order.product_image ? (
+  <img
+    src={order.product_image}
     alt={order.product_name}
     className="
       w-16
-      h-20
-      object-cover
+      h-16
       rounded-xl
+      object-cover
+    "
+  />
+) : (
+  <div
+    className="
+      w-16
+      h-16
+      rounded-xl
+      bg-[#F3EFE8]
       border
       border-[#E7E0D4]
     "
   />
+)}
 
   <div>
     <p className="font-medium text-[#111111]">
