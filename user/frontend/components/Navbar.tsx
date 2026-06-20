@@ -155,17 +155,7 @@ export default function Navbar() {
             {/* Right Side Icons */}
             <div className="flex items-center gap-6">
 
-<Link
-  href="/collections"
-  className="
-    flex
-    items-center
-    gap-2
-    text-sm
-    hover:text-[#B8860B]
-    transition-colors
-  "
->
+<Link href="/search">
   <Search size={18} />
   <span>Search</span>
 </Link>
