@@ -1,49 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
-  Search,
   Heart,
-  User,
+  Menu,
+  Search,
   ShoppingBag,
+  User,
+  X,
 } from "lucide-react";
-
 import { getCart } from "@/user/backend/cart/cartStorage";
+
+const navigation = [
+  { label: "Collections", href: "/collections" },
+  { label: "New Arrivals", href: "/new-arrivals" },
+];
 
 export default function Navbar() {
   const [cartCount, setCartCount] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const updateCartCount = () => {
       const cart = getCart();
-
-      const total = cart.reduce(
-        (sum, item) => sum + item.quantity,
-        0
-      );
-
+      const total = cart.reduce((sum, item) => sum + item.quantity, 0);
       setCartCount(total);
     };
 
     updateCartCount();
-
-    window.addEventListener(
-      "storage",
-      updateCartCount
-    );
-
-    window.addEventListener(
-      "cartUpdated",
-      updateCartCount as EventListener
-    );
+    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("cartUpdated", updateCartCount as EventListener);
 
     return () => {
-      window.removeEventListener(
-        "storage",
-        updateCartCount
-      );
-
+      window.removeEventListener("storage", updateCartCount);
       window.removeEventListener(
         "cartUpdated",
         updateCartCount as EventListener
@@ -51,190 +41,171 @@ export default function Navbar() {
     };
   }, []);
 
+  const scrollToFooter = () => {
+    setMenuOpen(false);
+    document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <header
-      className="
-        sticky
-        top-0
-        z-50
-        bg-[#F8F6F2]/95
-        backdrop-blur-md
-        border-b
-        border-[#E7E0D4]
-      "
-    >
-      <div className="w-full px-6">
-        <div className="h-24 flex items-center justify-between px-8 lg:px-12">
-          
-          {/* ========================================= */}
-          {/* LEFT SIDE: LOGOS */}
-          {/* ========================================= */}
-          {/* Increased gap-12 to gap-20 for a much wider space */}
-          <div className="flex items-center gap-20">
-            
-            {/* 1. Place your new logo here */}
-            {/* Example: <img src="/your-second-logo.png" alt="Logo" className="h-12 w-auto object-contain" /> */}
-            <div className="w-12">
-               {/* This empty div is acting as a temporary spacer until you add your img tag above */}
-            </div>
+    <header className="sticky top-0 z-50 border-b border-[#D4AF37]/35 bg-[#FFF9EC]/90 backdrop-blur-2xl">
+      <div className="bg-[#03132F] px-5 py-2 text-center text-[9px] font-medium uppercase tracking-[0.28em] text-[#F3DC8B] sm:text-[10px]">
+        Complimentary luxury packaging · Worldwide delivery
+      </div>
 
-            {/* 2. Existing Signature Logo */}
-            <Link href="/">
-              <div>
-                <h1
-                  className="
-                    font-luxury
-                    text-3xl
-                    text-[#111111]
-                    leading-none
-                  "
-                >
-                  SIGNATURE
-                </h1>
+      <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12">
+        <Link href="/" className="group relative z-10 shrink-0" aria-label="Signature home">
+          <h1 className="font-luxury text-2xl leading-none tracking-[0.08em] text-[#061B42] transition duration-300 group-hover:text-[#A97908] sm:text-3xl">
+            SIGNATURE
+          </h1>
+          <p className="mt-1 text-[7px] font-semibold uppercase tracking-[0.42em] text-[#A97908] sm:text-[8px]">
+            Luxury Silk Sarees
+          </p>
+        </Link>
 
-                <p
-                  className="
-                    text-[10px]
-                    uppercase
-                    tracking-[3px]
-                    text-[#B8860B]
-                    mt-1
-                  "
-                >
-                  Luxury Silk Sarees
-                </p>
-              </div>
-            </Link>
-          </div>
-
-          {/* ========================================= */}
-          {/* RIGHT SIDE: LINKS & ICONS */}
-          {/* ========================================= */}
-          <div className="flex items-center gap-10">
-            {/* Desktop Menu */}
-            <nav
-              className="
-                hidden
-                lg:flex
-                items-center
-                gap-10
-              "
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 lg:flex">
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="nav-link text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A285C]"
             >
-              <Link
-                href="/collections"
-                className="hover:text-[#B8860B] transition-colors"
-              >
-                Collections
-              </Link>
+              {item.label}
+            </Link>
+          ))}
+          <button
+            type="button"
+            onClick={scrollToFooter}
+            className="nav-link text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A285C]"
+          >
+            Contact
+          </button>
+        </nav>
 
-              <Link
-                href="/new-arrivals"
-                className="hover:text-[#B8860B] transition-colors"
-              >
-                New Arrivals
-              </Link>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <IconLink href="/search" label="Search">
+            <Search size={18} strokeWidth={1.6} />
+          </IconLink>
+          <IconLink href="/wishlist" label="Wishlist" hideOnSmall>
+            <Heart size={18} strokeWidth={1.6} />
+          </IconLink>
+          <IconLink href="/profile" label="Account" hideOnSmall>
+            <User size={18} strokeWidth={1.6} />
+          </IconLink>
 
-<button
-  onClick={() => {
-    document
-      .getElementById("footer")
-      ?.scrollIntoView({
-        behavior: "smooth",
-      });
-  }}
-  className="
-    hover:text-[#B8860B]
-    transition-colors
-  "
->
-  Contact
-</button>
+          <Link
+            href="/cart"
+            className="group relative flex h-11 items-center gap-2 rounded-full border border-[#D4AF37]/45 px-3 text-[#061B42] transition duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37] hover:bg-[#061B42] hover:text-[#F3DC8B] hover:shadow-lg sm:px-4"
+            aria-label={`Cart with ${cartCount} items`}
+          >
+            <ShoppingBag size={18} strokeWidth={1.6} />
+            <span className="hidden text-[10px] font-semibold uppercase tracking-[0.16em] xl:block">
+              Cart
+            </span>
+            {cartCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#D4AF37] px-1 text-[9px] font-bold text-[#03132F] shadow-md">
+                {cartCount}
+              </span>
+            )}
+          </Link>
 
-            </nav>
-
-            {/* Right Side Icons */}
-            <div className="flex items-center gap-6">
-
-<Link href="/search">
-  <Search size={18} />
-  <span>Search</span>
-</Link>
-
-              {/* Wishlist */}
-              <Link
-                href="/wishlist"
-                className="
-                  flex
-                  items-center
-                  gap-2
-                  text-sm
-                  hover:text-[#B8860B]
-                  transition-colors
-                "
-              >
-                <Heart size={18} />
-                <span>Wishlist</span>
-              </Link>
-
-              {/* Account */}
-              <Link
-                href="/profile"
-                className="
-                  flex
-                  items-center
-                  gap-2
-                  text-sm
-                  hover:text-[#B8860B]
-                  transition-colors
-                "
-              >
-                <User size={18} />
-                <span>Account</span>
-              </Link>
-
-              {/* Cart */}
-              <Link
-                href="/cart"
-                className="
-                  relative
-                  flex
-                  items-center
-                  gap-2
-                  text-sm
-                  hover:text-[#B8860B]
-                  transition-colors
-                "
-              >
-                <ShoppingBag size={18} />
-                <span>Cart</span>
-
-                {cartCount > 0 && (
-                  <span
-                    className="
-                      absolute
-                      -top-2
-                      -right-4
-                      w-5
-                      h-5
-                      rounded-full
-                      bg-[#B8860B]
-                      text-white
-                      text-[11px]
-                      font-medium
-                      flex
-                      items-center
-                      justify-center
-                    "
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-            </div>
-          </div>
-          
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="ml-1 flex h-11 w-11 items-center justify-center rounded-full border border-[#D4AF37]/45 text-[#061B42] transition hover:border-[#D4AF37] hover:bg-[#061B42] hover:text-[#F3DC8B] lg:hidden"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
+
+      <div
+        className={`overflow-hidden border-t border-[#D4AF37]/35 bg-[#FFF9EC] transition-all duration-500 lg:hidden ${
+          menuOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="space-y-1 px-5 py-6 sm:px-8">
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between border-b border-[#D4AF37]/25 py-4 font-luxury text-2xl text-[#061B42]"
+            >
+              {item.label}
+              <span className="text-sm text-[#A97908]">↗</span>
+            </Link>
+          ))}
+          <button
+            type="button"
+            onClick={scrollToFooter}
+            className="flex w-full items-center justify-between border-b border-[#D4AF37]/25 py-4 text-left font-luxury text-2xl text-[#061B42]"
+          >
+            Contact
+            <span className="text-sm text-[#A97908]">↓</span>
+          </button>
+          <div className="flex gap-3 pt-5 sm:hidden">
+            <Link href="/wishlist" className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#D4AF37]/50 py-3 text-xs uppercase tracking-wider text-[#061B42]">
+              <Heart size={16} /> Wishlist
+            </Link>
+            <Link href="/profile" className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#D4AF37]/50 py-3 text-xs uppercase tracking-wider text-[#061B42]">
+              <User size={16} /> Account
+            </Link>
+          </div>
+        </nav>
+      </div>
+
+      <style jsx>{`
+        .nav-link {
+          position: relative;
+          transition: color 300ms ease;
+        }
+        .nav-link::after {
+          position: absolute;
+          right: 0;
+          bottom: -8px;
+          left: 0;
+          height: 1px;
+          content: "";
+          background: #d4af37;
+          transform: scaleX(0);
+          transition: transform 300ms ease;
+        }
+        .nav-link:hover {
+          color: #a97908;
+        }
+        .nav-link:hover::after {
+          transform: scaleX(1);
+        }
+      `}</style>
     </header>
+  );
+}
+
+function IconLink({
+  href,
+  label,
+  hideOnSmall = false,
+  children,
+}: {
+  href: string;
+  label: string;
+  hideOnSmall?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      className={`group h-11 items-center gap-2 rounded-full px-3 text-[#061B42] transition duration-300 hover:-translate-y-0.5 hover:bg-[#061B42] hover:text-[#F3DC8B] hover:shadow-lg ${
+        hideOnSmall ? "hidden sm:flex" : "flex"
+      }`}
+    >
+      {children}
+      <span className="hidden text-[10px] font-semibold uppercase tracking-[0.16em] xl:block">
+        {label}
+      </span>
+    </Link>
   );
 }

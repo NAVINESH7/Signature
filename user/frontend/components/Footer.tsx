@@ -1,195 +1,163 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
+
+const collections = [
+  "Kanchipuram Silk",
+  "Banarasi Silk",
+  "Bridal Silk",
+  "Wedding Collection",
+];
+
+const customerCare = [
+  { label: "Track Orders", href: "/orders" },
+  { label: "Shipping", href: "/shipping" },
+  { label: "Returns", href: "/returns" },
+];
 
 export default function Footer() {
   return (
-    <footer
-  id="footer"
-  className="mt-24 bg-white border-t border-[#E7E0D4]"
->
-      <div className="luxury-container pt-20 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-14">
-          {/* Brand */}
+    <footer id="footer" className="relative overflow-hidden bg-[#171511] text-[#F4EEE3]">
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[32rem] w-[32rem] rounded-full border border-[#B9914B]/10" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-[20rem] w-[20rem] rounded-full border border-[#B9914B]/10" />
 
-          <div className="lg:col-span-2">
-            <h2
-              className="
-                font-luxury
-                text-5xl
-                text-[#111111]
-                leading-none
-              "
-            >
-              SIGNATURE
+      <div className="border-b border-white/10 px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+        <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-10 lg:flex-row lg:items-end">
+          <div>
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#C7A96B]">
+              A legacy woven in silk
+            </p>
+            <h2 className="max-w-4xl font-luxury text-5xl leading-[0.95] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
+              Find your forever saree.
             </h2>
+          </div>
+          <Link
+            href="/collections"
+            className="group inline-flex w-fit items-center gap-6 rounded-full border border-[#C7A96B]/60 px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.26em] transition duration-500 hover:-translate-y-1 hover:bg-[#C7A96B] hover:text-[#171511] sm:px-9 sm:py-5"
+          >
+            Explore collections
+            <span className="text-base transition duration-500 group-hover:translate-x-2">→</span>
+          </Link>
+        </div>
+      </div>
 
-            <p
-              className="
-                uppercase
-                tracking-[6px]
-                text-[#B8860B]
-                text-xs
-                mt-3
-              "
-            >
-              Luxury Silk Sarees
-            </p>
-
-            <p
-              className="
-                mt-6
-                text-gray-600
-                leading-9
-                max-w-lg
-                text-lg
-              "
-            >
+      <div className="px-5 py-20 sm:px-8 lg:px-12 lg:py-24">
+        <div className="mx-auto grid max-w-[1440px] gap-14 md:grid-cols-2 lg:grid-cols-[1.55fr_0.8fr_0.8fr_1fr] lg:gap-12">
+          <div>
+            <Link href="/" className="inline-block">
+              <h2 className="font-luxury text-4xl leading-none tracking-[0.08em] sm:text-5xl">
+                SIGNATURE
+              </h2>
+              <p className="mt-3 text-[8px] font-semibold uppercase tracking-[0.48em] text-[#C7A96B]">
+                Luxury Silk Sarees
+              </p>
+            </Link>
+            <p className="mt-8 max-w-md text-sm leading-7 text-[#AAA296] sm:text-base sm:leading-8">
               A celebration of heritage, craftsmanship and timeless elegance.
-              Discover premium silk sarees curated for bridal moments,
-              weddings and life's most treasured occasions.
+              Premium silk sarees curated for bridal moments, weddings and
+              life&apos;s most treasured occasions.
             </p>
+            <div className="mt-9 flex items-center gap-4">
+              <span className="h-px w-12 bg-[#C7A96B]" />
+              <span className="text-[9px] uppercase tracking-[0.3em] text-[#81796E]">
+                Rasipuram · Tamil Nadu
+              </span>
+            </div>
           </div>
 
-          {/* Collections */}
+          <FooterColumn title="Collections">
+            {collections.map((collection) => (
+              <li key={collection}>
+                <Link href="/collections" className="footer-link">
+                  {collection}
+                </Link>
+              </li>
+            ))}
+          </FooterColumn>
+
+          <FooterColumn title="Client Care">
+            <li>
+              <a href="#footer" className="footer-link">Contact Us</a>
+            </li>
+            {customerCare.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="footer-link">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </FooterColumn>
 
           <div>
-            <h3
-              className="
-                text-[#111111]
-                font-semibold
-                text-lg
-                mb-5
-              "
-            >
-              Collections
+            <h3 className="mb-7 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C7A96B]">
+              Private assistance
             </h3>
-
-            <ul className="space-y-3 text-gray-600 text-lg">
+            <ul className="space-y-4 text-sm leading-6 text-[#AAA296]">
               <li>
-                <Link href="/collections">
-                  Kanchipuram Silk
-                </Link>
+                <a className="footer-link break-all" href="mailto:meyusignature@gmail.com">
+                  meyusignature@gmail.com
+                </a>
               </li>
-
               <li>
-                <Link href="/collections">
-                  Banarasi Silk
-                </Link>
+                <a className="footer-link" href="tel:+919360672054">
+                  +91 93606 72054
+                </a>
               </li>
-
               <li>
-                <Link href="/collections">
-                  Bridal Silk
-                </Link>
+                <a className="footer-link" href="tel:+919080735468">
+                  +91 90807 35468
+                </a>
               </li>
-
-              <li>
-                <Link href="/collections">
-                  Wedding Collection
-                </Link>
+              <li className="pt-2 text-[#7F786D]">
+                Rasipuram, Tamil Nadu, India
               </li>
-            </ul>
-          </div>
-
-          {/* Customer Care */}
-
-          <div>
-            <h3
-              className="
-                text-[#111111]
-                font-semibold
-                text-lg
-                mb-5
-              "
-            >
-              Customer Care
-            </h3>
-
-            <ul className="space-y-3 text-gray-600 text-lg">
-
-
-<li>
-  <a href="#footer">
-    Contact Us
-  </a>
-</li>
-
-              <li>
-                <Link href="/orders">
-                  Track Orders
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/shipping">
-                  Shipping
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/returns">
-                  Returns
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-
-          <div>
-            <h3
-              className="
-                text-[#111111]
-                font-semibold
-                text-lg
-                mb-5
-              "
-            >
-              Contact
-            </h3>
-
-            <ul className="space-y-3 text-gray-600 text-lg">
-              <li>meyusignature@gmail.com</li>
-              <li>+91 93606 72054 </li>
-              <li>+91 90807 35468 </li>
-              
-              <li>Rasipuram, Tamil Nadu, India</li>
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom */}
-
-        <div
-          className="
-            mt-16
-            pt-8
-            border-t
-            border-[#E7E0D4]
-            flex
-            flex-col
-            items-center
-            text-center
-          "
-        >
-          <p className="text-gray-500 text-lg">
-            © 2026 SIGNATURE. All rights reserved.
-          </p>
-
-          <p className="text-gray-400 text-sm mt-1">
-            Developed by NAVINESH P K
-          </p>
-
-          <div className="flex gap-10 mt-8 text-gray-500">
-            <Link href="/privacy">
+      <div className="border-t border-white/10 px-5 py-7 sm:px-8 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-5 text-[10px] uppercase tracking-[0.18em] text-[#6F685E] md:flex-row md:items-center md:justify-between">
+          <div>
+            <p>© 2026 SIGNATURE. All rights reserved.</p>
+            <p className="mt-2 text-[9px] text-[#514C44]">Developed by NAVINESH P K</p>
+          </div>
+          <div className="flex flex-wrap gap-7">
+            <Link href="/privacy" className="transition hover:text-[#C7A96B]">
               Privacy Policy
             </Link>
-
-            <Link href="/terms">
+            <Link href="/terms" className="transition hover:text-[#C7A96B]">
               Terms & Conditions
             </Link>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .footer-link {
+          color: #aaa296;
+          transition: color 300ms ease, transform 300ms ease;
+        }
+        .footer-link:hover {
+          color: #d7ba7c;
+        }
+      `}</style>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <div>
+      <h3 className="mb-7 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C7A96B]">
+        {title}
+      </h3>
+      <ul className="space-y-4 text-sm">{children}</ul>
+    </div>
   );
 }

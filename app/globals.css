@@ -1,289 +1,123 @@
 @import "tailwindcss";
 
-/* =====================================
-   SIGNATURE DESIGN SYSTEM
-===================================== */
-
 :root {
-  --background: #f8f6f2;
-  --foreground: #111111;
-
-  --gold: #b8860b;
-  --gold-dark: #a87908;
-
-  --border-luxury: #e7e0d4;
-
-  --card-bg: #ffffff;
-}
-
-/* =====================================
-   RESET
-===================================== */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+  --royal-950: #03132f;
+  --royal-900: #061b42;
+  --royal-800: #0a285c;
+  --royal-700: #103979;
+  --gold-600: #a97908;
+  --gold-500: #d4af37;
+  --gold-400: #e7c85c;
+  --gold-300: #f3dc8b;
+  --ivory-100: #fffaf0;
+  --ivory-200: #f7f1e4;
+  --ink: #081a36;
+  --muted: #657087;
+  --font-luxury: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Montserrat", Arial, sans-serif;
 }
 
 * {
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  background: var(--ivory-100);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-
-  font-family: Arial, Helvetica, sans-serif;
-
+  margin: 0;
   overflow-x: hidden;
-
+  background:
+    radial-gradient(circle at 10% 0%, rgba(212, 175, 55, 0.09), transparent 28rem),
+    var(--ivory-100);
+  color: var(--ink);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
-
-/* =====================================
-   TYPOGRAPHY
-===================================== */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--foreground);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-p {
-  line-height: 1.7;
-}
-
-.font-luxury {
-  font-family: var(--font-playfair);
-}
-
-/* =====================================
-   GLOBAL SECTION TITLE
-===================================== */
-
-.section-title {
-  font-family: var(--font-playfair);
-  font-size: clamp(3rem, 5vw, 5rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: #111111;
-}
-
-/* =====================================
-   LINKS
-===================================== */
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: all 0.3s ease;
 }
 
-/* =====================================
-   BUTTONS
-===================================== */
-
-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
-/* =====================================
-   IMAGES
-===================================== */
-
-img {
-  max-width: 100%;
-  display: block;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
-.luxury-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.font-luxury,
+.section-title {
+  font-family: var(--font-luxury);
 }
 
-/* =====================================
-   SELECTION
-===================================== */
+.section-title {
+  color: var(--gold-600);
+  font-size: clamp(3.25rem, 6vw, 6.5rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.luxury-container {
+  width: min(100% - 2rem, 1440px);
+  margin-inline: auto;
+}
+
+.luxury-section {
+  padding-block: clamp(5.5rem, 10vw, 9rem);
+}
 
 ::selection {
-  background: var(--gold);
-  color: white;
+  background: var(--gold-500);
+  color: var(--royal-950);
 }
-
-/* =====================================
-   SCROLLBAR
-===================================== */
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: var(--royal-950);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  border: 2px solid var(--royal-950);
   border-radius: 999px;
+  background: linear-gradient(var(--gold-300), var(--gold-600));
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-dark);
+:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 4px;
 }
 
-/* =====================================
-   CONTAINER
-===================================== */
-
-.luxury-container {
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
-/* =====================================
-   SECTION SPACING
-===================================== */
-
-.luxury-section {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-/* =====================================
-   CARDS
-===================================== */
-
-.luxury-card {
-  background: white;
-  border: 1px solid var(--border-luxury);
-  border-radius: 24px;
-  overflow: hidden;
-
-  transition: all 0.4s ease;
-}
-
-.luxury-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-}
-
-/* =====================================
-   BORDER UTILITY
-===================================== */
-
-.gold-border {
-  border: 1px solid var(--border-luxury);
-}
-
-/* =====================================
-   HOVER EFFECTS
-===================================== */
-
-.hover-luxury {
-  transition: all 0.4s ease;
-}
-
-.hover-luxury:hover {
-  transform: translateY(-4px);
-}
-
-/* =====================================
-   IMAGE ZOOM
-===================================== */
-
-.image-zoom {
-  overflow: hidden;
-}
-
-.image-zoom img {
-  transition: transform 0.7s ease;
-}
-
-.image-zoom:hover img {
-  transform: scale(1.05);
-}
-
-/* =====================================
-   SHADOW UTILITIES
-===================================== */
-
-.luxury-shadow {
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-}
-
-.luxury-shadow-lg {
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-}
-
-/* =====================================
-   FADE ANIMATION
-===================================== */
-
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* =====================================
-   RESPONSIVE
-===================================== */
-
-@media (max-width: 1024px) {
+@media (max-width: 640px) {
   .luxury-container {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .luxury-section {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    width: min(100% - 1.25rem, 1440px);
   }
 }
 
-@media (max-width: 768px) {
-  .luxury-container {
-    padding-left: 20px;
-    padding-right: 20px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .luxury-section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-
-  .section-title {
-    font-size: 3rem;
-    line-height: 1;
-  }
-}
-
-@media (max-width: 480px) {
-  .section-title {
-    font-size: 2.5rem;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

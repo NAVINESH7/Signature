@@ -1,80 +1,29 @@
 import type { Metadata } from "next";
-
-import {
-  Geist,
-  Geist_Mono,
-  Playfair_Display,
-} from "next/font/google";
-
+import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 
-import { AuthProvider } from "@/user/frontend/context/AuthContext";
-
-/* =====================================
-   FONTS
-===================================== */
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const luxuryFont = Cormorant_Garamond({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
+  variable: "--font-luxury",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-/* =====================================
-   METADATA
-===================================== */
+const bodyFont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
-    default: "SIGNATURE | Luxury Silk Sarees",
-    template: "%s | SIGNATURE",
+    default: "Signature | Luxury Silk Sarees",
+    template: "%s | Signature",
   },
-
   description:
-    "Discover handcrafted luxury silk sarees inspired by timeless heritage, bridal elegance, and timeless craftsmanship.",
-
-  keywords: [
-    "Luxury Silk Sarees",
-    "Bridal Sarees",
-    "Kanchipuram Sarees",
-    "Banarasi Sarees",
-    "Wedding Sarees",
-    "Premium Sarees",
-    "SIGNATURE",
-  ],
-
-  applicationName: "SIGNATURE",
-
-  authors: [
-    {
-      name: "SIGNATURE",
-    },
-  ],
-
-  creator: "SIGNATURE",
-
-  openGraph: {
-    title: "SIGNATURE | Luxury Silk Sarees",
-    description:
-      "Luxury silk sarees crafted with heritage, elegance and timeless artistry.",
-    siteName: "SIGNATURE",
-    type: "website",
-  },
+    "Premium Kanchipuram, Banarasi, bridal and wedding silk sarees crafted for treasured occasions.",
 };
-
-/* =====================================
-   ROOT LAYOUT
-===================================== */
 
 export default function RootLayout({
   children,
@@ -82,27 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-<html
-  lang="en"
-  data-scroll-behavior="smooth"
-  className={`
-    ${geistSans.variable}
-    ${geistMono.variable}
-    ${playfair.variable}
-  `}
->
-      <body
-        className="
-          min-h-screen
-          bg-[#F8F6F2]
-          text-[#111111]
-          font-(--font-geist-sans)
-        "
-      >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
+    <html lang="en" className={`${luxuryFont.variable} ${bodyFont.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
