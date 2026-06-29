@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 
+import { AuthProvider } from "@/user/frontend/context/AuthContext";
+
 const luxuryFont = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-luxury",
@@ -31,8 +33,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${luxuryFont.variable} ${bodyFont.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={`${luxuryFont.variable} ${bodyFont.variable}`}
+    >
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }
